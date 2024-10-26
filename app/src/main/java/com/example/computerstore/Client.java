@@ -16,7 +16,6 @@ public class Client {
     public int getId() {
         return id;
     }
-
     public String getUsername() {
         return username;
     }

@@ -1,9 +1,15 @@
 package com.example.computerstore;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,11 +23,16 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ClientAdapter clientAdapter;
     private List<Client> clientList;
-
+    private Button btnUpdate;
+    Toolbar toolbar;
+    Toolbar toolbar1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_dashboard); // Đảm bảo bạn có layout này
+
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -32,6 +43,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         clientAdapter = new ClientAdapter(clientList, this);
         recyclerView.setAdapter(clientAdapter);
+
+        btnUpdate=findViewById(R.id.btnUpdate1);
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recreate();
+            }
+        });
     }
 
     private void loadClientData() {
@@ -61,4 +80,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return false;
+    }
+
 }

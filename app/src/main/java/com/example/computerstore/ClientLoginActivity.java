@@ -74,9 +74,10 @@ public class ClientLoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean loginSuccessful) {
             if (loginSuccessful) {
-                Toast.makeText(ClientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ClientLoginActivity.this, ClientDashboardActivity.class);
                 startActivity(intent);
+                Toast.makeText(ClientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(ClientLoginActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
