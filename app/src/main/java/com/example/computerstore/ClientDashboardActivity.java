@@ -1,5 +1,6 @@
 package com.example.computerstore;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ClientDashboardActivity extends AppCompatActivity {
 
     private RecyclerView productRecyclerView;
+    private ProductAdapter productAdapter;
+    private List<Product> productList;
 
 
 
@@ -30,11 +39,14 @@ public class ClientDashboardActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
 
         // Thiết lập RecyclerView
-        //productRecyclerView = findViewById(R.id.productRecyclerView);
-        //productRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        productRecyclerView = findViewById(R.id.productRecyclerView);
+        productRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Thiết lập adapter cho RecyclerView
-        // productRecyclerView.setAdapter(yourAdapter);
+        productList = new ArrayList<>();
+        loadProductData(); // Tải dữ liệu từ cơ sở dữ liệu
+
+        productAdapter = new ProductAdapter(productList);
+        productRecyclerView.setAdapter(productAdapter);
 
         // Thiết lập Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
@@ -54,6 +66,35 @@ public class ClientDashboardActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+    private void loadProductData() {
+        productList.clear(); // Xóa danh sách trước khi thêm dữ liệu mới
+        try {
+            Connect connect = new Connect();
+            Connection connection = connect.connection();
+            if (connection != null) {
+                String sqlSelect = "select* from Product;";
+                Statement st = connection.createStatement();
+                ResultSet resultSet = st.executeQuery(sqlSelect);
+
+                // Lặp qua tất cả các bản ghi trong ResultSet
+                while (resultSet.next()) {
+                    int productId = resultSet.getInt("ProductId");
+                    String productName = resultSet.getString("productName");
+                    String description= resultSet.getString("description");
+                    double price= resultSet.getDouble("price");;
+                    double discount= resultSet.getDouble("discount");
+                    int stockQuantity= resultSet.getInt("stockQuantity");
+                    int categoryId= resultSet.getInt("categoryId");
+
+                    Product product= new Product(productId, productName, description, price, discount, stockQuantity, categoryId);
+                    productList.add(product);
+                }
+                connection.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

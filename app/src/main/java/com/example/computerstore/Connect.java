@@ -11,9 +11,9 @@ public class Connect {
     String uname, pass, ip,port, database;
 
     public Connection connection(){
-        ip="192.168.0.137";
+        ip="192.168.0.139";
         database="ComputerStore";
-        uname="aaa";
+        uname="aa";
         pass="113112111Tien";
         port="1433";
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
