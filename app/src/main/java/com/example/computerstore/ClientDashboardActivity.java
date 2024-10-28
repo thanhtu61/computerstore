@@ -1,5 +1,7 @@
 package com.example.computerstore;
 
+import android.content.Intent;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,8 +28,6 @@ public class ClientDashboardActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private List<Product> productList;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +45,7 @@ public class ClientDashboardActivity extends AppCompatActivity {
         productList = new ArrayList<>();
         loadProductData(); // Tải dữ liệu từ cơ sở dữ liệu
 
-        productAdapter = new ProductAdapter(productList);
+        productAdapter = new ProductAdapter(productList, this);
         productRecyclerView.setAdapter(productAdapter);
 
         // Thiết lập Bottom Navigation
@@ -54,13 +54,16 @@ public class ClientDashboardActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.nav_home) {
-                    // Xử lý sự kiện cho Trang Chủ
+                    Intent homeIntent = new Intent(ClientDashboardActivity.this, ClientDashboardActivity.class);
+                    startActivity(homeIntent);
                     return true;
                 } else if (item.getItemId() == R.id.nav_cart) {
-                    // Xử lý sự kiện cho Giỏ Hàng
+                    Intent cartIntent = new Intent(ClientDashboardActivity.this, CartActivity.class);
+                    startActivity(cartIntent);
                     return true;
                 } else if (item.getItemId() == R.id.nav_user) {
-                    // Xử lý sự kiện cho Thông Tin User
+                    Intent userIntent = new Intent(ClientDashboardActivity.this, UserActivity.class);
+                    startActivity(userIntent);
                     return true;
                 }
                 return false;
@@ -86,8 +89,9 @@ public class ClientDashboardActivity extends AppCompatActivity {
                     double discount= resultSet.getDouble("discount");
                     int stockQuantity= resultSet.getInt("stockQuantity");
                     int categoryId= resultSet.getInt("categoryId");
+                    String imgProduct= resultSet.getString("imgProduct");
 
-                    Product product= new Product(productId, productName, description, price, discount, stockQuantity, categoryId);
+                    Product product= new Product(productId, productName, description, price, discount, stockQuantity, categoryId, imgProduct);
                     productList.add(product);
                 }
                 connection.close();

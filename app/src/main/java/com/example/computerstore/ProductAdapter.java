@@ -1,19 +1,33 @@
 package com.example.computerstore;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.time.Instant;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
+    private Context context;
 
-    public ProductAdapter(List<Product> productList) {
+    public ProductAdapter(List<Product> productList, Context context) {
         this.productList = productList;
+        this.context = context;
     }
 
     @NonNull
@@ -21,6 +35,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_product, parent, false);
+
         return new ProductViewHolder(view);
     }
 
@@ -33,8 +48,23 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 //        holder.textPrice.setText(String.valueOf(product.getPrice()));
 //        holder.textDiscount.setText(String.valueOf(product.getDiscount()));
 //        holder.textStockQuantity.setText(String.valueOf(product.getCategoryId()));
+        holder.textProductName.setText(product.getProductName());
+        holder.textDescription.setText(product.getDescription());
+        holder.textPrice.setText("Price: $" + product.getPrice());
+        holder.textDiscount.setText("Discount: " + product.getDiscount() + "%");
+        holder.textStockQuantity.setText("In Stock: " + product.getStockQuantity());
+        Glide.with(context).load(product.getImgProduct()).into(holder.productImageView);
 
-        holder.bind(product);
+        holder.addCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //addToCart(product);
+                Toast.makeText(context, product.getProductName() + " added to cart", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        //Picasso.get().load(product.getImgProduct()).into(holder.productImageView);
     }
 
     @Override
@@ -49,6 +79,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         private TextView textPrice;
         private TextView textDiscount;
         private TextView textStockQuantity;
+        private ImageView productImageView;
+        private ImageView addCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,14 +89,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             textPrice = itemView.findViewById(R.id.text_price);
             textDiscount = itemView.findViewById(R.id.text_discount);
             textStockQuantity = itemView.findViewById(R.id.text_stock_quantity);
+            productImageView = itemView.findViewById(R.id.img_product);
+            addCart=itemView.findViewById(R.id.add_cart);
         }
+    }
 
-        public void bind(Product product) {
-            textProductName.setText(product.getProductName());
-            textDescription.setText(product.getDescription());
-            textPrice.setText("Price: $" + product.getPrice());
-            textDiscount.setText("Discount: " + product.getDiscount() + "%");
-            textStockQuantity.setText("In Stock: " + product.getStockQuantity());
-        }
+    private void addToCart(Product product) {
+        // Add your logic to add the product to the cart
+
+
+        Toast.makeText(context, product.getProductName() + " added to cart", Toast.LENGTH_SHORT).show();
     }
 }

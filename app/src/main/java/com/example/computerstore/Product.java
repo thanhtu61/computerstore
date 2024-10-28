@@ -3,7 +3,6 @@ package com.example.computerstore;
 import android.widget.ImageView;
 
 public class Product {
-    private ImageView img;
     private int productId;
     private String productName;
     private String description;
@@ -11,9 +10,10 @@ public class Product {
     private double discount;
     private int stockQuantity;
     private int categoryId;
+    private String imgProduct;
 
     // Constructor
-    public Product(int productId, String productName, String description, double price, double discount, int stockQuantity, int categoryId) {
+    public Product(int productId, String productName, String description, double price, double discount, int stockQuantity, int categoryId, String imgProduct) {
         this.productId = productId;
         this.productName = productName;
         this.description = description;
@@ -21,6 +21,7 @@ public class Product {
         this.discount = discount;
         this.stockQuantity = stockQuantity;
         this.categoryId = categoryId;
+        this.imgProduct= imgProduct;
     }
 
     // Getter and Setter methods
@@ -79,5 +80,13 @@ public class Product {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getImgProduct() {
+        return imgProduct;
+    }
+
+    public void setImgProduct(String imgProduct) {
+        this.imgProduct = imgProduct;
     }
 }

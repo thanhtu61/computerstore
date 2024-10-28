@@ -25,7 +25,6 @@ public class Connect {
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance();
             ConnectionURL = "jdbc:jtds:sqlserver://" + ip + ":" + port + "/" + database + ";user=" + uname + ";password=" + pass + ";";
             connection = DriverManager.getConnection(ConnectionURL);
-            Log.d("MyApp", "This is a debug message");
         }
         catch (Exception ex){
             Log.e("Error", ex.getMessage());

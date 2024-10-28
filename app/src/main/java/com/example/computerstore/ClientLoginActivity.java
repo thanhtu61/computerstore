@@ -3,6 +3,7 @@ package com.example.computerstore;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -76,6 +77,7 @@ public class ClientLoginActivity extends AppCompatActivity {
             if (loginSuccessful) {
                 Intent intent = new Intent(ClientLoginActivity.this, ClientDashboardActivity.class);
                 startActivity(intent);
+                Log.d("MyApp", "This is a debug message1");
                 Toast.makeText(ClientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
             } else {
