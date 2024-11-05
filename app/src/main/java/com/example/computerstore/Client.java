@@ -4,12 +4,14 @@ public class Client {
     private int id;
     private String username;
     private String phone;
+    private String email;
     private String address;
 
-    public Client(int id, String username, String phone, String address) {
+    public Client(int id, String username, String email,String phone, String address) {
         this.id = id;
         this.username = username;
         this.phone = phone;
+        this.email = email;
         this.address = address;
     }
 
@@ -27,6 +29,12 @@ public class Client {
     }
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getAddress() {
         return address;

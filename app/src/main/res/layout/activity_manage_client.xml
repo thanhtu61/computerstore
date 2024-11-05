@@ -1,0 +1,116 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="  ID"
+                android:paddingEnd="16dp"/>
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:paddingEnd="16dp"/>
+
+
+            <TextView
+
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Phone"
+                android:paddingEnd="16dp"/>
+
+            <TextView
+
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:paddingEnd="16dp"/>
+            <TextView
+
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:paddingEnd="16dp"/>
+            <TextView
+
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:paddingEnd="16dp"/>
+
+        </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+        </LinearLayout>
+    </HorizontalScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/etUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password" />
+
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Phone" />
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email" />
+
+        <EditText
+            android:id="@+id/etAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address" />
+
+
+        <Button
+            android:id="@+id/btnAddClient"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Client" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnUpdate1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update data"/>
+</LinearLayout>

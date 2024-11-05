@@ -20,13 +20,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin);
+        setContentView(R.layout.activity_admin_dashboard);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        String[] arr = new String[]{"Client Management", "Order Management", "Warranty Management", "Inventory Management", "Inventory Receipt Management", "Supplier Management"};
+        String[] arr = new String[]{"Client Management", "Product Management", "Warranty Management", "Inventory Management", "Inventory Receipt Management", "Supplier Management"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminDashboardActivity.this, android.R.layout.simple_list_item_1, arr);
 
         adminListView = findViewById(R.id.adminListView);
@@ -42,7 +42,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case 1:
-                        intent = new Intent(AdminDashboardActivity.this, manageClientsActivity.class);
+                        intent = new Intent(AdminDashboardActivity.this, manageProductsActivity.class);
                         startActivity(intent);
                         break;
                 }

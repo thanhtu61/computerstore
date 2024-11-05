@@ -11,7 +11,7 @@ public class Connect {
     String uname, pass, ip,port, database;
 
     public Connection connection(){
-        ip="192.168.0.139";
+        ip="192.168.0.102";
         database="ComputerStore";
         uname="aa";
         pass="113112111Tien";

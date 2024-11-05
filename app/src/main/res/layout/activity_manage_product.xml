@@ -1,0 +1,163 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="ID"
+                    android:padding="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvProductname"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Productname"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:paddingEnd="16dp"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tvDiscount"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Discount"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvCategory"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="Category"
+                    android:paddingEnd="16dp"/>
+
+                <TextView
+                    android:id="@+id/tvImgProduct"
+                    android:layout_width="1000dp"
+                    android:layout_height="wrap_content"
+                    android:text="ImgProduct"
+                    android:paddingEnd="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="400dp"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <EditText
+                android:id="@+id/etProductname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Product name" />
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Description" />
+
+            <EditText
+                android:id="@+id/etPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Price" />
+
+            <EditText
+                android:id="@+id/etDiscount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Discount" />
+
+            <EditText
+                android:id="@+id/etQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Quantity" />
+
+            <EditText
+                android:id="@+id/etCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Category" />
+
+            <EditText
+                android:id="@+id/etImgProduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Img product" />
+
+
+            <Button
+                android:id="@+id/btnAddProduct"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add Product" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnUpdate1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update data" />
+    </LinearLayout>
+</ScrollView>

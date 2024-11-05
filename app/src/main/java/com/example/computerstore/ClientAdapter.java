@@ -44,14 +44,16 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
         holder.tvId.setText(String.valueOf(client.getId()));
         holder.tvUsername.setText(client.getUsername());
         holder.tvPhone.setText(client.getPhone());
+        holder.tvEmail.setText(client.getEmail());
         holder.tvAddress.setText(client.getAddress());
 
         holder.btnEdit.setOnClickListener(v -> {
             String username = holder.tvUsername.getText().toString();
             String phone = holder.tvPhone.getText().toString();
+            String email = holder.tvEmail.getText().toString();
             String address = holder.tvAddress.getText().toString();
 
-            boolean isUpdated = updateUser(client.getId(), username, phone, address);
+            boolean isUpdated = updateUser(client.getId(), username, phone,email, address);
 
             if (isUpdated) {
                 // Thông báo cho người dùng rằng thông tin đã được cập nhật
@@ -59,6 +61,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
                 // Cập nhật danh sách client trong adapter
                 client.setUsername(username);
                 client.setPhone(phone);
+                client.setEmail(email);
                 client.setAddress(address);
                 notifyItemChanged(position);
             } else {
@@ -83,7 +86,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
     }
 
     public static class ClientViewHolder extends RecyclerView.ViewHolder {
-        EditText tvId, tvUsername, tvPhone, tvAddress;
+        EditText tvId, tvUsername, tvPhone, tvEmail, tvAddress;
         Button btnEdit, btnDelete;
 
         public ClientViewHolder(@NonNull View itemView) {
@@ -91,13 +94,14 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
             tvId = itemView.findViewById(R.id.tvId);
             tvUsername = itemView.findViewById(R.id.tvUsername);
             tvPhone = itemView.findViewById(R.id.tvPhone);
+            tvEmail=itemView.findViewById(R.id.tvEmail);
             tvAddress = itemView.findViewById(R.id.tvAddress);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
 
-    public boolean updateUser(int clientId, String username, String phone, String address) {
+    public boolean updateUser(int clientId, String username, String phone, String email, String address) {
         try {
             Connect connect = new Connect();
             Connection connection = connect.connection();
@@ -105,7 +109,7 @@ public class ClientAdapter extends RecyclerView.Adapter<ClientAdapter.ClientView
 
                 // Chèn tài khoản mới
                 String sqlUpdate = "Update [user] \n" +
-                        "set Username='" + username + "', phone='" + phone + "', [Address]='" + address + "'\n" +
+                        "set Username='" + username + "', phone='" + phone + "',email='" + email + "', [Address]='" + address + "'\n" +
                         "where UserID=(select UserID from client where ClientID="+clientId+");";
                 Statement st = connection.createStatement();
                 int rowsInserted = st.executeUpdate(sqlUpdate);
