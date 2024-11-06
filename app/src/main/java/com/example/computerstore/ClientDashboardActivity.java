@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -27,12 +28,24 @@ public class ClientDashboardActivity extends AppCompatActivity {
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList;
+    Intent intent = getIntent();
+   // int clientId= intent.getIntExtra("key_int", 0);
+   int clientId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_dashboard); // Đảm bảo bạn đã tạo file activity_client.xml
-
+        Intent intent = getIntent();
+            if (intent != null) {
+                   clientId = intent.getIntExtra("key_int", 0);
+               } else {
+                    // Xử lý trường hợp intent là null nếu cần
+                    Toast.makeText(this, "No Intent data available", Toast.LENGTH_SHORT).show();
+                    finish(); // Kết thúc activity nếu không có dữ liệu
+                    return;
+                }
         // Thiết lập Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,29 +57,32 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
         productList = new ArrayList<>();
         loadProductData(); // Tải dữ liệu từ cơ sở dữ liệu
-
-        productAdapter = new ProductAdapter(productList, this);
+       // productAdapter = new ProductAdapter(productList, this, clientId);
+        productAdapter = new ProductAdapter(productList, this,clientId);
         productRecyclerView.setAdapter(productAdapter);
 
         // Thiết lập Bottom Navigation
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.nav_home) {
-                    Intent homeIntent = new Intent(ClientDashboardActivity.this, ClientDashboardActivity.class);
-                    startActivity(homeIntent);
-                    return true;
-                } else if (item.getItemId() == R.id.nav_cart) {
-                    Intent cartIntent = new Intent(ClientDashboardActivity.this, CartActivity.class);
-                    startActivity(cartIntent);
-                    return true;
-                } else if (item.getItemId() == R.id.nav_user) {
-                    Intent userIntent = new Intent(ClientDashboardActivity.this, UserActivity.class);
-                    startActivity(userIntent);
-                    return true;
-                }
-                return false;
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    if (item.getItemId() == R.id.nav_home) {
+                        Intent homeIntent = new Intent(ClientDashboardActivity.this, ClientDashboardActivity.class);
+                        startActivity(homeIntent);
+                        return true;
+                    } else if (item.getItemId() == R.id.nav_cart) {
+                        Intent cartIntent = new Intent(ClientDashboardActivity.this, CartActivity.class);
+                        cartIntent.putExtra("key_int", clientId);
+                        Log.d("Error1", String.valueOf(clientId));
+                        startActivity(cartIntent);
+                        return true;
+                    } else if (item.getItemId() == R.id.nav_user) {
+                        Intent userIntent = new Intent(ClientDashboardActivity.this, UserActivity.class);
+                        startActivity(userIntent);
+                        return true;
+                    }
+                    return false;
             }
         });
     }

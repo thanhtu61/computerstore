@@ -19,7 +19,7 @@ public class ClientLoginActivity extends AppCompatActivity {
     private EditText clientPasswordEditText;
     private Button clientLoginButton;
     private Button createAccountButton;
-
+    int clientId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +65,7 @@ public class ClientLoginActivity extends AppCompatActivity {
                     if (resultSet.next()) {
                         loginSuccessful = true;
                     }
+                    clientId = resultSet.getInt("clientId");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -76,6 +77,7 @@ public class ClientLoginActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean loginSuccessful) {
             if (loginSuccessful) {
                 Intent intent = new Intent(ClientLoginActivity.this, ClientDashboardActivity.class);
+                intent.putExtra("key_int", clientId);
                 startActivity(intent);
                 Log.d("MyApp", "This is a debug message1");
                 Toast.makeText(ClientLoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
