@@ -26,7 +26,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        String[] arr = new String[]{"Client Management", "Product Management", "Warranty Management", "Inventory Management", "Inventory Receipt Management", "Supplier Management"};
+        String[] arr = new String[]{"Client Management", "Product Management", "Order Management", "Inventory Management", "Inventory Receipt Management", "Supplier Management"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AdminDashboardActivity.this, android.R.layout.simple_list_item_1, arr);
 
         adminListView = findViewById(R.id.adminListView);
@@ -43,6 +43,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
                         break;
                     case 1:
                         intent = new Intent(AdminDashboardActivity.this, manageProductsActivity.class);
+                        startActivity(intent);
+                        break;
+                    case 2:
+                        intent = new Intent(AdminDashboardActivity.this, manageOrdersActivity.class);
                         startActivity(intent);
                         break;
                 }

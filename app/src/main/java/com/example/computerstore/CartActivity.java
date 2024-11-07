@@ -17,7 +17,10 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -63,7 +66,6 @@ public class CartActivity extends AppCompatActivity {
         recyclerViewCart.setAdapter(cartAdapter);
 
 
-
 // Tính tổng tiền và hiển thị
         double totalAmount = calculateTotal();
         textViewTotal.setText(String.format("Total: %.2f", totalAmount)); // Hiển thị tổng tiền với 2 chữ số thập phân
@@ -98,12 +100,89 @@ public class CartActivity extends AppCompatActivity {
         });
         // Xử lý sự kiện đặt hàng
         buttonOrder.setOnClickListener(v -> {
-            Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-            finish(); // Kết thúc activity sau khi đặt hàng
+            Connection connection = null;
+            Statement statement = null;
+
+            try {
+                Connect connect = new Connect();
+                connection = connect.connection();
+                if (connection != null) {
+                    statement = connection.createStatement();
+                    for (Cart cartItem : cartList) {
+                        // Calculate total price if needed
+                        //double totalPrice = calculateTotal();
+                        // Format current date
+                        String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                        String sqlInsert = "INSERT INTO [Order] (ClientID, ProductID, ProductName, Price, Quantity, Total, DateAdded) " +
+                                "VALUES (" + clientId + ", "
+                                + cartItem.getProductId() + ", '"
+                                + cartItem.getProductName() + "', "
+                                + cartItem.getPrice_d() + ", "
+                                + cartItem.getQuantity() + ", "
+                                + cartItem.getPrice_d() * cartItem.getQuantity()  + ", '"
+                                + currentDate + "')";
+
+                        int rowsInserted = statement.executeUpdate(sqlInsert);
+                        if (rowsInserted <= 0) {
+                            Toast.makeText(this, "Failed to place order for " + cartItem.getProductName(), Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
+                    finish(); // End activity after placing order
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(this, "Error placing order: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            } finally {
+                try {
+                    if (statement != null) {
+                        statement.close();
+                    }
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            // Remove items from cart after placing order
+            try {
+                Connect connect = new Connect();
+                connection = connect.connection();
+                if (connection != null) {
+                    statement = connection.createStatement();
+                    String sqlDelete = "DELETE FROM [Cart] WHERE ClientID = " + clientId;
+                    int rowsDeleted = statement.executeUpdate(sqlDelete);
+                    if (rowsDeleted > 0) {
+                        Log.d("CartAdapter", "Cart cleared successfully.");
+                    } else {
+                        Log.d("CartAdapter", "Failed to clear cart.");
+                    }
+                    connection.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e("CartAdapter", "Error clearing cart: " + e.getMessage());
+            } finally {
+                try {
+                    if (statement != null) {
+                        statement.close();
+                    }
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         });
+
     }
 
-    private double calculateTotal() {
+        private double calculateTotal() {
         double total = 0.0;
 
         for (Cart cartItem : cartList) {
