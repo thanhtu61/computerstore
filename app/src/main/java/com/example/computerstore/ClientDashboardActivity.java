@@ -28,8 +28,6 @@ public class ClientDashboardActivity extends AppCompatActivity {
     private RecyclerView productRecyclerView;
     private ProductAdapter productAdapter;
     private List<Product> productList;
-    Intent intent = getIntent();
-   // int clientId= intent.getIntExtra("key_int", 0);
    int clientId;
 
 
@@ -40,6 +38,7 @@ public class ClientDashboardActivity extends AppCompatActivity {
         Intent intent = getIntent();
             if (intent != null) {
                    clientId = intent.getIntExtra("key_int", 0);
+
                } else {
                     // Xử lý trường hợp intent là null nếu cần
                     Toast.makeText(this, "No Intent data available", Toast.LENGTH_SHORT).show();
@@ -69,16 +68,17 @@ public class ClientDashboardActivity extends AppCompatActivity {
 
                     if (item.getItemId() == R.id.nav_home) {
                         Intent homeIntent = new Intent(ClientDashboardActivity.this, ClientDashboardActivity.class);
+                        homeIntent.putExtra("key_int", clientId);
                         startActivity(homeIntent);
                         return true;
                     } else if (item.getItemId() == R.id.nav_cart) {
                         Intent cartIntent = new Intent(ClientDashboardActivity.this, CartActivity.class);
                         cartIntent.putExtra("key_int", clientId);
-                        Log.d("Error1", String.valueOf(clientId));
                         startActivity(cartIntent);
                         return true;
                     } else if (item.getItemId() == R.id.nav_user) {
                         Intent userIntent = new Intent(ClientDashboardActivity.this, UserActivity.class);
+                        userIntent.putExtra("key_int", clientId);
                         startActivity(userIntent);
                         return true;
                     }

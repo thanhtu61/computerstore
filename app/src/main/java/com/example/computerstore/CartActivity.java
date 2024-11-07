@@ -130,7 +130,9 @@ public class CartActivity extends AppCompatActivity {
                         }
                     }
                     Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-                    finish(); // End activity after placing order
+                    Intent cartIntent = new Intent(CartActivity.this, CartActivity.class);
+                    cartIntent.putExtra("key_int", clientId);
+                    startActivity(cartIntent);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
